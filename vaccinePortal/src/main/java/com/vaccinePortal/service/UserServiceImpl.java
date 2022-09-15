@@ -31,10 +31,13 @@ public class UserServiceImpl implements UserService {
 	private PasswordEncoder encoder;
 
 	@Override
-	public UserRegResponse registerUser(UserDTO user) {
+	public UserRegResponse registerUser(UserDTO user) throws Exception {
 		// Objective : 1 rec inserted in users table n insert n recs in link table
 		// user_roles
 		// 1. Map dto --> entity
+		System.out.println("from db "+userRepo.findByEmail(user.getEmail()));
+		if(userRepo.findByOnlyEmail(user.getEmail()).isPresent()) throw new Exception("Email Already registered");
+		if(userRepo.findByPhone(user.getPhoneNumber()).isPresent()) throw new Exception("Phone Number Already registered");
 		UserEntity userEntity = mapper.map(user, UserEntity.class);
 		// 2. Map Set<UserRole : enum> ---> Set<Role :entity> n assign it to the
 		// transient user entity
@@ -43,8 +46,9 @@ public class UserServiceImpl implements UserService {
 		userEntity.setPassword(encoder.encode(user.getPassword()));
 //		userEntity.setPhoneNumber(user.getPhoneNumber());
 		// 4 : Save user details
+		System.out.println("saving noww");
 		UserEntity persistentUser = userRepo.save(userEntity);
-		return new UserRegResponse("User registered successfully with ID " + persistentUser.getId());
+		return new UserRegResponse("User registered successfully ");
 	}
 
 }

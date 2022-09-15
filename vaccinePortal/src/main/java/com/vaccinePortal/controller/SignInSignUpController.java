@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,10 +22,11 @@ import com.vaccinePortal.jwt_utils.JwtUtils;
 import com.vaccinePortal.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
-
+import com.vaccinePortal.dto.ApiResponse;
 @RestController
 @RequestMapping("/auth")
 @Slf4j
+@CrossOrigin
 public class SignInSignUpController {
 //dep : JWT utils : for generating JWT
 	@Autowired
@@ -55,13 +57,14 @@ public class SignInSignUpController {
 			// send back err resp code
 			System.out.println("err "+authToken);
 			
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse(e.getMessage()));
+			
 		}
 
 	}
 	//add request handling method for user registration
 	@PostMapping("/signup")
-	public ResponseEntity<?> userRegistration(@RequestBody @Valid UserDTO user)
+	public ResponseEntity<?> userRegistration(@RequestBody @Valid UserDTO user) throws Exception
 	{
 		System.out.println("in reg user : user "+user+" roles "+user.getRoles());//{....."roles" : [ROLE_USER,...]}
 		//invoke service layer method , for saving : user info + associated roles info

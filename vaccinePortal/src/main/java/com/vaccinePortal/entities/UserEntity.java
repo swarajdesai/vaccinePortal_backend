@@ -22,15 +22,17 @@ import lombok.ToString;
 public class UserEntity extends BaseEntity{
 	
 	@Column
-	private String firstName;
-	@Column
-	private String lastName;
+	private String name;
 	@Column(unique = true)
 	private String email;
 	@Column(length = 350)
 	private String password;
 	@Column(length = 10)
 	private String phoneNumber;
+	@Column
+	private Integer age;
+	@Column(length=1) 
+	private String gender;
 	// many-to-many , User *--->* Role
 	@ManyToMany
 	@JoinTable(name = "user_roles", 

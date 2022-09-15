@@ -8,11 +8,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.vaccinePortal.entities.Vaccine;
+
 @SpringBootApplication
 public class VaccinePortalApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(VaccinePortalApplication.class, args);
+		
 	}
 	@Bean
 	public ModelMapper mapper()

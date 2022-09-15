@@ -7,6 +7,6 @@ import com.vaccinePortal.dto.UserRegResponse;
 
 public interface UserService {
 
-	UserRegResponse registerUser(UserDTO user);
+	UserRegResponse registerUser(UserDTO user) throws Exception;
 
 }
