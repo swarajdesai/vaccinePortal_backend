@@ -1,5 +1,7 @@
 package com.vaccinePortal.entities;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -9,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -24,7 +27,7 @@ import lombok.ToString;
 @Table(name = "vaccine")
 @Getter
 @Setter
-@ToString(exclude ="hosiptals")
+@ToString(exclude ="vaccineStock")
 public class Vaccine extends BaseEntity{
 	@Column()
 	private String name;
@@ -34,15 +37,6 @@ public class Vaccine extends BaseEntity{
 	private Integer maxAge;
 	@Column(length=1)
 	private String gender;
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(
-            name = "vaccine_hospitals",
-            joinColumns = @JoinColumn(
-                    name = "vaccine_id", referencedColumnName = "id"
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "hospital_id", referencedColumnName = "id"
-            )
-    )
-	private Set<Hospital> hosiptals;
+	@OneToMany(mappedBy="vaccine",fetch=FetchType.EAGER, cascade={CascadeType.ALL})
+	private Set<VaccineStock> vaccineStock;
 }

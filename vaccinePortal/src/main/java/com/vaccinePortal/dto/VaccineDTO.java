@@ -1,6 +1,7 @@
 package com.vaccinePortal.dto;
 
 import java.util.Set;
+import com.vaccinePortal.entities.VaccineStock;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -37,6 +39,6 @@ public class VaccineDTO {
 	@NotBlank
 	@Pattern(regexp = "^M|F$",message = "Please provide valid gender")
 	private String gender;
-	
-	private Set<HospitalDTO> hosiptals;
+	@JsonIgnore
+	private Set<VaccineStock> vaccineStock;
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vaccinePortal.dto.VaccineDTO;
+import com.vaccinePortal.dto.VaccineHospResponse;
 import com.vaccinePortal.service.VaccineService;
 
 
@@ -36,7 +37,7 @@ public class VaccineController {
 	}
 	
 	@GetMapping("/getInfo/{id}")
-	public ResponseEntity<VaccineDTO> getuser(@PathVariable long id) {
+	public ResponseEntity<VaccineHospResponse> getuser(@PathVariable long id) throws Exception {
 		return new ResponseEntity<>(vaccineServ.getHospitalsForVaccine(id),HttpStatus.OK);
 	}
 }

@@ -1,6 +1,7 @@
 package com.vaccinePortal.dto;
 
 import java.util.List;
+import java.util.Map;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +11,6 @@ import lombok.Setter;
 public class RegisterVaccineDTO {
 	private HospitalDTO hospital;
 	
-	private List<VaccineDTO> vaccines;
+	private Map<String,Integer> vaccines;
 
 }

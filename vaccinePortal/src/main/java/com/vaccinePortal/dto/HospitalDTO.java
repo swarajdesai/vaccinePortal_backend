@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.vaccinePortal.entities.VaccineStock;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -22,5 +23,5 @@ public class HospitalDTO {
 	@NotBlank(message = " phone must be supplied")
 	private String phoneNumber;
 	@JsonIgnore
-	private Set<VaccineDTO> vaccines;
+	private Set<VaccineStock> vaccineStocks;
 }
