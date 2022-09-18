@@ -1,6 +1,5 @@
 package com.vaccinePortal.controller;
 
-import java.security.Principal;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;

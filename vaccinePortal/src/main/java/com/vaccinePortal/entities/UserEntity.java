@@ -3,11 +3,14 @@ package com.vaccinePortal.entities;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -38,5 +41,7 @@ public class UserEntity extends BaseEntity{
 	@JoinTable(name = "user_roles", 
 	joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> userRoles = new HashSet<>();
+	@OneToMany(mappedBy="user",fetch=FetchType.EAGER, cascade={CascadeType.ALL})
+	private Set<VaccineBooking> bookings = new HashSet<>();
 
 }

@@ -1,5 +1,6 @@
 package com.vaccinePortal.entities;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -35,5 +36,8 @@ public class Hospital extends BaseEntity{
 	private String phoneNumber;
 	@OneToMany(mappedBy="hospital",fetch=FetchType.EAGER, cascade={CascadeType.ALL})
 	private Set<VaccineStock> vaccineStocks;
+	
+	@OneToMany(mappedBy="hospital",fetch=FetchType.EAGER, cascade={CascadeType.ALL})
+	private Set<VaccineBooking> bookings = new HashSet<>();
 	
 }

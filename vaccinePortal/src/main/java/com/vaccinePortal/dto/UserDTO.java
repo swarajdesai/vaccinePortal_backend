@@ -10,8 +10,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.vaccinePortal.entities.VaccineBooking;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -43,5 +45,7 @@ public class UserDTO {
 	// many-to-many , User *--->* Role
 	@NotEmpty(message = "at least 1 role should be chosen")
 	private Set<UserRole> roles = new HashSet<>();
-
+	
+	@JsonIgnore
+	private Set<VaccineBooking> bookings;
 }

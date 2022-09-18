@@ -42,8 +42,8 @@ public class WebSecurityConfig {
 		}).
 		and().
 		authorizeRequests()
-		.antMatchers("/products/add").hasRole("ADMIN")
-		.antMatchers("/products/purchase").hasRole("CUSTOMER")
+		.antMatchers("/products/add").hasRole("USER")
+		.antMatchers("/products/purchase","/vaccine/eligibleVaccines","/vaccine/book").hasRole("USER")
 		.antMatchers("/products/view", "/auth/signin","/vaccine/**","/hospital/**", "/auth/signup", "/swagger*/**", "/v*/api-docs/**").permitAll() // enabling global
 																										// access to all
 																										// urls with
