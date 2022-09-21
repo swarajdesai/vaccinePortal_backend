@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import com.vaccinePortal.dto.BookingDTO;
@@ -46,10 +47,13 @@ public class VaccineServiceImpl implements VaccineService{
 	private VaccineStockRepository vsRepo;
 	
 	@Override
-	public List<VaccineDTO> getAllVaccines() throws Exception {
+	public List<VaccineDTO> getAllVaccines(Authentication auth) throws Exception {
+		UserEntity user = userRepo.findByOnlyEmail(auth.getName()).orElseThrow(()-> new Exception("No User Found"));
 		List<VaccineDTO> vaccines = new ArrayList<>();
 		for(Vaccine v  : vaccineRepo.findAll()) {
-			vaccines.add(mapper.map(v, VaccineDTO.class));
+			VaccineDTO dto = mapper.map(v, VaccineDTO.class);
+			if(user.getAge() <= dto.getMaxAge() && user.getAge() >= dto.getMinAge() && (dto.getGender().equals("") || dto.getGender().equals(user.getGender()))) dto.setEligible(true);
+			vaccines.add(dto);
 		}
 		return vaccines;
 	}
@@ -76,9 +80,13 @@ public class VaccineServiceImpl implements VaccineService{
 	@Override
 	public List<VaccineDTO> getMyEligibleVaccines(Authentication auth) throws Exception {
 		UserEntity user = userRepo.findByOnlyEmail(auth.getName()).orElseThrow(()-> new Exception("No User Found"));
+		System.out.println("age is "+user.getAge());
 		List<Vaccine> vaccines = vaccineRepo.findEligibleVaccines(user.getAge(), user.getGender());
-		return vaccines.stream().map(v -> mapper.map(v,VaccineDTO.class)).toList();
+		
+		return vaccines.stream().map(v -> mapper.map(v,VaccineDTO.class)).map(v->{v.setEligible(true); return v;}).toList();
 	}
+	
+	
 
 	@Override
 	public BookingDTO bookVaccine(Authentication auth , HospitalDTO hospitalDTO , VaccineDTO vaccineDTO, LocalDate date) throws Exception {

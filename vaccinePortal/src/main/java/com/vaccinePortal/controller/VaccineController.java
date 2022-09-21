@@ -32,8 +32,8 @@ public class VaccineController {
 	private VaccineService vaccineServ;
 	
 	@GetMapping("/getAll")
-	public ResponseEntity<List<VaccineDTO>> getAllVaccines() throws Exception{
-		return new ResponseEntity<>(vaccineServ.getAllVaccines(),HttpStatus.OK);
+	public ResponseEntity<List<VaccineDTO>> getAllVaccines(Authentication auth) throws Exception{
+		return new ResponseEntity<>(vaccineServ.getAllVaccines(auth),HttpStatus.OK);
 	}
 	
 	@PostMapping("/add")

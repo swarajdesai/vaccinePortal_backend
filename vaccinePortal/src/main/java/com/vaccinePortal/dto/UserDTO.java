@@ -1,15 +1,19 @@
 package com.vaccinePortal.dto;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -36,9 +40,9 @@ public class UserDTO {
 	private String password;
 	@NotBlank(message="Phone Number must be supplied")
 	private String phoneNumber;
-	@Min(1)
-	@Max(99)
-	private Integer age;
+	@NotNull(message="BirthDate must be supplied")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private LocalDate birthDate;
 	@NotBlank
 	@Pattern(regexp = "^M|F$",message = "Please provide valid gender")
 	private String gender;

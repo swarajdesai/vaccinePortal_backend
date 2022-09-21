@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
 @Getter
 @Setter
 @ToString
@@ -14,4 +17,5 @@ import lombok.ToString;
 public class AuthResp {
 	private String message;
 	private String jwt;
+	private List<String> roles;
 }

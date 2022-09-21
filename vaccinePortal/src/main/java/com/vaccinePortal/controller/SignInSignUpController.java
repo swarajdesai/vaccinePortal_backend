@@ -1,5 +1,7 @@
 package com.vaccinePortal.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,9 +53,10 @@ public class SignInSignUpController {
 		try {
 			// authenticate the credentials
 			Authentication authenticatedDetails = manager.authenticate(authToken);
-			log.info("auth token again " + authenticatedDetails);
+			log.info("auth token again " + authenticatedDetails.getAuthorities());
 			// => auth succcess
-			return ResponseEntity.ok(new AuthResp("Auth successful!", utils.generateJwtToken(authenticatedDetails)));
+			List<String> roles = authenticatedDetails.getAuthorities().stream().map(a -> a.getAuthority()).toList();
+			return ResponseEntity.ok(new AuthResp("Auth successful!", utils.generateJwtToken(authenticatedDetails) ,  roles));
 		} catch (BadCredentialsException e) { // lab work : replace this by a method in global exc handler
 			// send back err resp code
 			System.out.println("err "+authToken);

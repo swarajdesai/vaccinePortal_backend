@@ -1,5 +1,7 @@
 package com.vaccinePortal.service;
 
+import java.time.LocalDate;
+
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
@@ -38,6 +40,7 @@ public class UserServiceImpl implements UserService {
 		System.out.println("from db "+userRepo.findByEmail(user.getEmail()));
 		if(userRepo.findByOnlyEmail(user.getEmail()).isPresent()) throw new Exception("Email Already registered");
 		if(userRepo.findByPhone(user.getPhoneNumber()).isPresent()) throw new Exception("Phone Number Already registered");
+		if(user.getBirthDate().isAfter(LocalDate.now())) throw new Exception("Birth Date should not be future date");
 		UserEntity userEntity = mapper.map(user, UserEntity.class);
 		// 2. Map Set<UserRole : enum> ---> Set<Role :entity> n assign it to the
 		// transient user entity

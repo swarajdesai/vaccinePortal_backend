@@ -30,15 +30,14 @@ public class VaccineDTO {
 	private Long id;
 	@NotBlank(message = " name must be supplied")
 	private String name;
-	@Min(1)
-	@Max(99)
+	@Min(0)
 	private Integer minAge;
-	@Min(1)
-	@Max(99)
+	@Min(0)
 	private Integer maxAge;
 	@NotBlank
 	@Pattern(regexp = "^M|F$",message = "Please provide valid gender")
 	private String gender;
+	private boolean isEligible;
 	@JsonIgnore
 	private Set<VaccineStock> vaccineStock;
 }

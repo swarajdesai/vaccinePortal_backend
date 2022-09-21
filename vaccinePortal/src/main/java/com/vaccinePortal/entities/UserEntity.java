@@ -1,5 +1,7 @@
 package com.vaccinePortal.entities;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,7 +35,7 @@ public class UserEntity extends BaseEntity{
 	@Column(length = 10)
 	private String phoneNumber;
 	@Column
-	private Integer age;
+	private LocalDate birthDate;
 	@Column(length=1) 
 	private String gender;
 	// many-to-many , User *--->* Role
@@ -43,5 +45,10 @@ public class UserEntity extends BaseEntity{
 	private Set<Role> userRoles = new HashSet<>();
 	@OneToMany(mappedBy="user",fetch=FetchType.EAGER, cascade={CascadeType.ALL})
 	private Set<VaccineBooking> bookings = new HashSet<>();
+	
+	public Integer getAge() {
+		Period diff=  Period.between(this.getBirthDate(), LocalDate.now());
+		return diff.getYears()*12+diff.getMonths();
+	}
 
 }

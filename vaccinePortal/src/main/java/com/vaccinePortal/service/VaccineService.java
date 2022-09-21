@@ -13,7 +13,7 @@ import com.vaccinePortal.dto.VaccineDTO;
 import com.vaccinePortal.dto.VaccineHospResponse;
 
 public interface VaccineService {
-	List<VaccineDTO> getAllVaccines() throws Exception;
+	
 	
 	VaccineDTO addVaccine(VaccineDTO vaccineDTO) throws Exception;
 
@@ -22,5 +22,9 @@ public interface VaccineService {
 	List<VaccineDTO> getMyEligibleVaccines(Authentication auth) throws Exception;
 	
 	BookingDTO bookVaccine(Authentication auth ,HospitalDTO hospital ,  VaccineDTO vaccine , LocalDate date) throws Exception;
+
+	List<VaccineDTO> getAllVaccines(Authentication auth) throws Exception;
+	
+	
 
 }
