@@ -37,6 +37,8 @@ public class Vaccine extends BaseEntity{
 	private Integer maxAge;
 	@Column(length=1)
 	private String gender;
+	@Column
+	private String disease;
 	@OneToMany(mappedBy="vaccine",fetch=FetchType.EAGER, cascade={CascadeType.ALL})
 	private Set<VaccineStock> vaccineStock;
 }

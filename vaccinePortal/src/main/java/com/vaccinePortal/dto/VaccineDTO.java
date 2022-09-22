@@ -37,6 +37,8 @@ public class VaccineDTO {
 	@NotBlank
 	@Pattern(regexp = "^M|F$",message = "Please provide valid gender")
 	private String gender;
+	@NotBlank
+	private String disease;
 	private boolean isEligible;
 	@JsonIgnore
 	private Set<VaccineStock> vaccineStock;

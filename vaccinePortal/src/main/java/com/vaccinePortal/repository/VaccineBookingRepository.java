@@ -1,5 +1,6 @@
 package com.vaccinePortal.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +13,7 @@ public interface VaccineBookingRepository extends JpaRepository<VaccineBooking, 
 	
 	Optional<VaccineBooking> findByHospital(Hospital hospital);
 	
-	Optional<VaccineBooking> findByUser(UserEntity user);
+	List<VaccineBooking> findByUser(UserEntity user);
 	
 	
 	

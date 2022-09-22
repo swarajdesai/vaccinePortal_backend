@@ -12,9 +12,11 @@ import com.vaccinePortal.entities.VaccineStock;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class HospitalDTO {
 	private Long id;
 	@NotBlank(message = " name must be supplied")

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.security.core.Authentication;
 
 import com.vaccinePortal.dto.BookingDTO;
+import com.vaccinePortal.dto.BookingResp;
 import com.vaccinePortal.dto.HospitalDTO;
 import com.vaccinePortal.dto.RegisterVaccineDTO;
 import com.vaccinePortal.dto.UserDTO;
@@ -21,10 +22,12 @@ public interface VaccineService {
 	
 	List<VaccineDTO> getMyEligibleVaccines(Authentication auth) throws Exception;
 	
-	BookingDTO bookVaccine(Authentication auth ,HospitalDTO hospital ,  VaccineDTO vaccine , LocalDate date) throws Exception;
+	BookingResp bookVaccine(Authentication auth ,HospitalDTO hospital ,  VaccineDTO vaccine , LocalDate date) throws Exception;
 
 	List<VaccineDTO> getAllVaccines(Authentication auth) throws Exception;
 	
+	BookingResp cancelBooking(Authentication auth ,BookingDTO bookingDTO) throws Exception;
 	
+	List<BookingDTO> getMyBookings(Authentication auth) throws Exception;
 
 }
