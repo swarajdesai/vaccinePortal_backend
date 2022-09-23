@@ -13,6 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vaccinePortal.dto.AuthRequest;
 import com.vaccinePortal.dto.AuthResp;
+import com.vaccinePortal.dto.ResetPasswordDTO;
 import com.vaccinePortal.dto.UserDTO;
 import com.vaccinePortal.jwt_utils.JwtUtils;
 import com.vaccinePortal.service.UserService;
@@ -74,4 +76,22 @@ public class SignInSignUpController {
 		//invoke service layer method , for saving : user info + associated roles info
 		return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerUser(user));		
 	}
+	
+	@GetMapping("/profile")
+	public ResponseEntity<UserDTO> getProfileInfo(Authentication auth) throws Exception
+	{
+		return ResponseEntity.status(HttpStatus.OK).body(userService.getProfileInfo(auth));		
+	}
+	
+	@PostMapping("/updateProfile")
+	public ResponseEntity<?> updateProfile(@RequestBody  UserDTO user,Authentication auth) throws Exception
+	{
+		return ResponseEntity.status(HttpStatus.OK).body(userService.updateProfile(auth, user));		
+	}
+	@PostMapping("/changePassword")
+	public ResponseEntity<?> changePassword(@RequestBody ResetPasswordDTO dto,Authentication auth) throws Exception
+	{
+		return ResponseEntity.status(HttpStatus.OK).body(userService.changePassword(auth, dto));		
+	}
+	
 }

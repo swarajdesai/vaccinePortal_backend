@@ -29,7 +29,7 @@ import lombok.ToString;
 public class UserDTO {
 	@JsonProperty(access = Access.READ_ONLY) // user id will be serialized n sent to clnt BUT it won't be read from clnt
 												// n de-serialized
-	private Long userId;
+	private Long id;
 	@NotBlank(message = " name must be supplied")
 	private String name;
 	
