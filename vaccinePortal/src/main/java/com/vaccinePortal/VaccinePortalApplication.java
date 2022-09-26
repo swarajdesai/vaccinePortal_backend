@@ -3,12 +3,19 @@ package com.vaccinePortal;
 
 
 import java.util.Collections;
+import java.util.Properties;
+import java.util.concurrent.Executor;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import com.vaccinePortal.entities.Vaccine;
 
@@ -21,11 +28,13 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
+@EnableAsync
 //@EnableSwagger2
 public class VaccinePortalApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(VaccinePortalApplication.class, args);
+	    
 		
 	}
 	@Bean
@@ -35,6 +44,16 @@ public class VaccinePortalApplication {
 		 modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		 return modelMapper;
 	}
+	 @Bean
+	  public Executor taskExecutor() {
+	    ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+	    executor.setCorePoolSize(2);
+	    executor.setMaxPoolSize(2);
+	    executor.setQueueCapacity(500);
+	    executor.setThreadNamePrefix("GithubLookup-");
+	    executor.initialize();
+	    return executor;
+	  }
 	
 	@Bean
     public Docket api() {

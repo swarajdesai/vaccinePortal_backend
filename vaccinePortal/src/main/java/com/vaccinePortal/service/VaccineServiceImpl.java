@@ -50,6 +50,8 @@ public class VaccineServiceImpl implements VaccineService{
 	private VaccineStockRepository vsRepo;
 	@Autowired
 	private HospitalServiceImpl hospServ;
+	@Autowired
+	private MailService mail;
 	
 	@Override
 	public List<VaccineDTO> getAllVaccines(Authentication auth) throws Exception {
@@ -136,6 +138,7 @@ public class VaccineServiceImpl implements VaccineService{
 		vb.setStatus(BookingStatus.CANCELLED);
 		vbRepo.save(vb);
 		hospServ.addVaccinesToHospitals(bookingDTO.getHospital(), Map.of(bookingDTO.getVaccine().getId().toString(),1));
+		mail.sendMail(user.getEmail(), "<h1> Booking No "+vb.getId()+"is cancelled </h1>", "Booking cancellation");
 		return new BookingResp("Booking with ID : "+vb.getId()+" is cancelled");
 	}
 
